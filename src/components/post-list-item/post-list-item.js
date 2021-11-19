@@ -15,30 +15,36 @@ export default class PostListItem extends Component {
     this.onImportant = this.onImportant.bind(this);
     this.onLike = this.onLike.bind(this);
   }
-  onImportant() {
+
+  onImportant(e) {
+    //SEML I added stopPropogation
+    e.stopPropagation();
     this.setState(({ important }) => ({
       important: !important,
     }));
   }
+
   onLike() {
     this.setState(({ like }) => ({
       like: !like,
     }));
   }
   render() {
-    const { label } = this.props;
-    const { important, like } = this.state;
+    // const { label } = this.props;
+    // const { important, like } = this.state;
+
+    // SEML my version without destructuring
     let classNames = "app-list-item d-flex justify-content-between";
-    if (important) {
+    if (this.state.important) {
       classNames += " important";
     }
-    if (like) {
+    if (this.state.like) {
       classNames += " like";
     }
 
     return (
       <div className={classNames} onClick={this.onLike}>
-        <span className="app-list-item-label">{label}</span>
+        <span className="app-list-item-label">{this.props.label}</span>
         <div className="d-flex justify-content-center align-items-center">
           <button
             type="button"
